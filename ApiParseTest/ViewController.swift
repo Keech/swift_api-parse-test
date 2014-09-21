@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        //
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,5 +21,30 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func load(sender: AnyObject) {
+        getData()
+    }
+    
+    func getData(){
+        let URL = NSURL(string: "http://express.heartrails.com/api/json?method=getPrefectures")
+        let req = NSURLRequest(URL: URL)
+        let connection: NSURLConnection = NSURLConnection(request: req, delegate: self, startImmediately: false)
+        
+        NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue.mainQueue(), completionHandler: response)
+    }
+    
+    func response(res: NSURLResponse!, data: NSData!, error: NSError!){
+        
+        let json: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as NSDictionary
+        
+        let res: NSDictionary = json.objectForKey("response") as NSDictionary
+        let pref: NSArray = res.objectForKey("prefecture") as NSArray
+        
+        //1行ずつログに表示
+        for var i=0; i<pref.count; i++ {
+            println(pref[i])
+        }
+    }
+   
 }
 
