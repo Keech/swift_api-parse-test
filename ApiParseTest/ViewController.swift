@@ -28,7 +28,6 @@ class ViewController: UIViewController {
     func getData(){
         let URL = NSURL(string: "http://express.heartrails.com/api/json?method=getPrefectures")
         let req = NSURLRequest(URL: URL)
-        let connection: NSURLConnection = NSURLConnection(request: req, delegate: self, startImmediately: false)
         
         NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue.mainQueue(), completionHandler: response)
     }
